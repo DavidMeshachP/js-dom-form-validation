@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script>
+
+        const wrapper = document.createElement('div');
+        wrapper.className = "container";
+
+        const leftDiv = document.createElement('div');
+        leftDiv.className = "box1";
+
+        const rightDiv = document.createElement('div');
+        rightDiv.className = "box2";
+
+        const image = document.createElement('img');
+        image.className = "image";
+        image.setAttribute("src", "images/targetRight.jpg");
+        image.setAttribute("alt", "blue dot image");
+
+        const form = document.createElement("form");
+        form.setAttribute("onsubmit", "return validateForm()");
+        form.setAttribute("method", "post");
+        form.setAttribute("name", "loginForm");
+        form.className = "form";
+
+        const emailLabel = document.createElement("label");
+        emailLabel.textContent = "Email";
+        emailLabel.setAttribute("for", "email");
+        emailLabel.className = "label";
+
+        const emailError = document.createElement("div");
+        emailError.className = "error";
+        emailError.id = "emailError";
+
+        const emailInput = document.createElement("input");
+        emailInput.setAttribute("placeholder", "Enter your email");
+        emailInput.setAttribute("name", "email");
+        emailInput.className = "inp";
+        emailInput.id = "emailInput";
+
+        const passwordLabel = document.createElement("label");
+        passwordLabel.textContent = "Password";
+        passwordLabel.setAttribute("for", "password");
+        passwordLabel.className = "label";
+
+        const passwordError = document.createElement("div");
+        passwordError.className = "error";
+        passwordError.id = "passwordError";
+
+        const passwordInput = document.createElement("input");
+        passwordInput.setAttribute("type", "password");
+        passwordInput.setAttribute("placeholder", "Enter your password");
+        passwordInput.setAttribute("name", "password");
+        passwordInput.className = "inp";
+        passwordInput.id = "passInput";
+
+        const checkboxInput = document.createElement("input");
+        checkboxInput.setAttribute("type", "checkbox");
+        checkboxInput.setAttribute("name", "remember");
+
+        const checkboxLabel = document.createElement("label");
+        checkboxLabel.setAttribute("for", "remember");
+        checkboxLabel.textContent = "Remember for 30 days";
+
+        const forgotPasswordLink = document.createElement("a");
+        forgotPasswordLink.setAttribute("href", "#");
+        forgotPasswordLink.textContent = "Forgot password";
+        forgotPasswordLink.className = "forgotPasswordLink";
+
+        const finalError = document.createElement("div");
+        finalError.className = "error";
+        finalError.id = "finalError";
+
+        const signInButton = document.createElement("input");
+        signInButton.setAttribute("id", "signin");
+        signInButton.setAttribute("type", "submit");
+        signInButton.setAttribute("value", "Sign in");
+        signInButton.className = "inpbut";
+
+        const googleButton = document.createElement("button");
+        googleButton.setAttribute("class", "inpbut");
+        googleButton.textContent = "Sign in with Google";
+
+        const signUpParagraph = document.createElement("p");
+        signUpParagraph.textContent = "Don't have an account?";
+        signUpParagraph.className = "signUpPara";
+
+        const signUpLink = document.createElement("a");
+        signUpLink.setAttribute("href", "#");
+        signUpLink.textContent = "Sign up";
+
+        document.body.appendChild(wrapper);
+
+        wrapper.appendChild(leftDiv);
+        wrapper.appendChild(rightDiv);
+
+        leftDiv.appendChild(form);
+        rightDiv.appendChild(image);
+
+        form.appendChild(emailLabel);
+        form.appendChild(emailError);
+        form.appendChild(emailInput);
+        form.appendChild(passwordLabel);
+        form.appendChild(passwordError);
+        form.appendChild(passwordInput);
+        form.appendChild(checkboxInput);
+        form.appendChild(checkboxLabel);
+        form.appendChild(forgotPasswordLink);
+        form.appendChild(finalError);
+        form.appendChild(signInButton);
+        form.appendChild(googleButton);
+        signUpParagraph.appendChild(signUpLink);
+        form.appendChild(signUpParagraph);
+
+
+        function validateForm() {
+            let email = document.forms["loginForm"]["email"].value;
+            let password = document.forms["loginForm"]["password"].value;
+
+            let storedemail = "david@gmail.com";
+            let storedPassword = "David@123";
+            const regEmail = /^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const regPass = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){8,}$/;
+
+            if (email.trim() == "" && password.trim() == "") {
+
+                document.getElementById("emailError").innerHTML = "email must be filled out";
+
+                document.getElementById("passwordError").innerHTML = "Password cannot be empty";
+
+                disappear();
+
+            }
+
+            if (email.trim() == "" && password.trim() != "") {
+                document.getElementById("emailError").innerHTML = "email must be filled out";
+
+                if (!regPass.test(password)) {
+                    document.getElementById("passwordError").innerHTML = "password format wrong";
+                }
+
+                disappear();
+
+            }
+
+            if (email.trim() != "" && password.trim() == "") {
+                document.getElementById("passwordError").innerHTML = "Password cannot be empty";
+
+                if (!regEmail.test(email)) {
+                    document.getElementById("emailError").innerHTML = "email format wrong";
+                }
+
+                disappear();
+
+            }
+
+            if (email.trim() != "" && password.trim() != "") {
+
+                if (!regEmail.test(email) && !regPass.test(password)) {
+                    document.getElementById("emailError").innerHTML = "email format wrong1";
+
+                    document.getElementById("passwordError").innerHTML = "password format wrong";
+                }
+                else {
+                    if (regEmail.test(email) && !regPass.test(password)) {
+                        document.getElementById("passwordError").innerHTML = "password format wrong";
+                        return;
+                    }
+                    else {
+                        if (!regEmail.test(email) && regPass.test(password)) {
+                            document.getElementById("emailError").innerHTML = "email format wrong";
+                        }
+                    }
+                }
+
+                disappear();
+
+            }
+
+            if (email.trim() != "" && password.trim() != "" && regEmail.test(email) && regPass.test(password)) {
+
+                document.getElementById("finalError").innerHTML = "Success!23234!";
+
+                if (email == storedemail && password == storedPassword) {
+                    document.getElementById("finalError").innerHTML = "Success!!";
+                    document.getElementById("finalError").style.color = "green";
+                    document.getElementById("finalError").style.textAlign = "center";
+
+                    disappear();
+                }
+                else {
+                    document.getElementById("finalError").innerHTML = "Give the correct credentials!!";
+                    document.getElementById("finalError").style.color = "red";
+                    document.getElementById("finalError").style.textAlign = "center";
+
+                    disappear();
+                }
+
+            }
+
+        }
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            validateForm();
+        });
+
+        function disappear() {
+            let emailField = document.getElementById("emailInput");
+
+            emailField.addEventListener("input", function () {
+                document.getElementById("emailError").innerHTML = "";
+                document.getElementById("passwordError").innerHTML = "";
+                document.getElementById("finalError").innerHTML = "";
+            })
+
+            let passField = document.getElementById("passInput");
+
+            passField.addEventListener("input", function () {
+                document.getElementById("emailError").innerHTML = "";
+                document.getElementById("passwordError").innerHTML = "";
+                document.getElementById("finalError").innerHTML = "";
+            })
+        }
+
+    </script>
+
+
+</body>
+
+</html>
