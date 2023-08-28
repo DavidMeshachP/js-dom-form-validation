@@ -83,3 +83,28 @@ a {
 .error {
     color: red;
 }
+
+.fpform {
+    margin-left: 190px;
+    display: none;
+}
+
+.fplabel {
+    color: grey;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.fpinp {
+    width: 350px;
+    height: 30px;
+    border-radius: 5px;
+    border-width: 1px;
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#fpsignin {
+    background-color: blueviolet;
+}

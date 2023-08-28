@@ -26,10 +26,13 @@
         image.setAttribute("alt", "blue dot image");
 
         const form = document.createElement("form");
-        form.setAttribute("onsubmit", "return validateForm()");
+        form.setAttribute("onsubmit", "validateForm()");
         form.setAttribute("method", "post");
         form.setAttribute("name", "loginForm");
         form.className = "form";
+
+        const heading = document.createElement("h2");
+        heading.textContent = "Login";
 
         const emailLabel = document.createElement("label");
         emailLabel.textContent = "Email";
@@ -72,6 +75,7 @@
 
         const forgotPasswordLink = document.createElement("a");
         forgotPasswordLink.setAttribute("href", "#");
+        forgotPasswordLink.setAttribute("onclick", "forgotPass()");
         forgotPasswordLink.textContent = "Forgot password";
         forgotPasswordLink.className = "forgotPasswordLink";
 
@@ -97,14 +101,66 @@
         signUpLink.setAttribute("href", "#");
         signUpLink.textContent = "Sign up";
 
+        // forgot password
+        const fpform = document.createElement("form");
+        fpform.setAttribute("method", "post");
+        fpform.setAttribute("name", "forgotPasswordForm");
+        fpform.className = "fpform";
+
+        const formHeading = document.createElement("h2");
+        formHeading.textContent = "Update Password";
+
+        const fpemailLabel = document.createElement("label");
+        fpemailLabel.textContent = "Email";
+        fpemailLabel.setAttribute("for", "fpemail");
+        fpemailLabel.className = "fplabel";
+
+        const fpemailError = document.createElement("div");
+        fpemailError.className = "fperror";
+        fpemailError.id = "fpemailError";
+
+        const fpemailInput = document.createElement("input");
+        fpemailInput.setAttribute("placeholder", "Enter your email");
+        fpemailInput.setAttribute("name", "fpemail");
+        fpemailInput.className = "fpinp";
+        fpemailInput.id = "fpemailinput";
+
+        const fppasswordLabel = document.createElement("label");
+        fppasswordLabel.textContent = "Password";
+        fppasswordLabel.setAttribute("for", "fppassword");
+        fppasswordLabel.className = "fplabel";
+        fppasswordLabel.id = "fppasswordlabel";
+
+        const fppasswordError = document.createElement("div");
+        fppasswordError.className = "fperror";
+        fppasswordError.id = "fppasswordError";
+
+        const fppasswordInput = document.createElement("input");
+        fppasswordInput.setAttribute("type", "password");
+        fppasswordInput.setAttribute("placeholder", "Enter your password");
+        fppasswordInput.setAttribute("name", "fppassword");
+        fppasswordInput.disabled = true;
+        fppasswordInput.className = "fpinp";
+        fppasswordInput.id = "fppassInput";
+
+        const fpchangePassword = document.createElement("input");
+        fpchangePassword.setAttribute("id", "fpsignin");
+        fpchangePassword.setAttribute("type", "submit");
+        fpchangePassword.setAttribute("value", "Change Password");
+        fpchangePassword.setAttribute("onclick", "changePass()");
+        fpchangePassword.className = "inpbut";
+        // ---------------
+
         document.body.appendChild(wrapper);
 
         wrapper.appendChild(leftDiv);
         wrapper.appendChild(rightDiv);
 
         leftDiv.appendChild(form);
+        leftDiv.appendChild(fpform);
         rightDiv.appendChild(image);
 
+        form.appendChild(heading);
         form.appendChild(emailLabel);
         form.appendChild(emailError);
         form.appendChild(emailInput);
@@ -120,13 +176,31 @@
         signUpParagraph.appendChild(signUpLink);
         form.appendChild(signUpParagraph);
 
+        fpform.appendChild(formHeading);
+        fpform.appendChild(fpemailLabel);
+        fpform.appendChild(fpemailError);
+        fpform.appendChild(fpemailInput);
+        fpform.appendChild(fppasswordLabel);
+        fpform.appendChild(fppasswordError);
+        fpform.appendChild(fppasswordInput);
+        fpform.appendChild(fpchangePassword);
+
+        let storedEmailAndPass = [
+            {
+                "email": "david@gmail.com",
+                "password": "David@123"
+            },
+            {
+                "email": "mesh@gmail.com",
+                "password": "Mesh@123"
+            }
+        ]
+
 
         function validateForm() {
             let email = document.forms["loginForm"]["email"].value;
             let password = document.forms["loginForm"]["password"].value;
 
-            let storedemail = "david@gmail.com";
-            let storedPassword = "David@123";
             const regEmail = /^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             const regPass = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){8,}$/;
 
@@ -165,14 +239,13 @@
             if (email.trim() != "" && password.trim() != "") {
 
                 if (!regEmail.test(email) && !regPass.test(password)) {
-                    document.getElementById("emailError").innerHTML = "email format wrong1";
+                    document.getElementById("emailError").innerHTML = "email format wrong";
 
                     document.getElementById("passwordError").innerHTML = "password format wrong";
                 }
                 else {
                     if (regEmail.test(email) && !regPass.test(password)) {
                         document.getElementById("passwordError").innerHTML = "password format wrong";
-                        return;
                     }
                     else {
                         if (!regEmail.test(email) && regPass.test(password)) {
@@ -187,17 +260,40 @@
 
             if (email.trim() != "" && password.trim() != "" && regEmail.test(email) && regPass.test(password)) {
 
-                document.getElementById("finalError").innerHTML = "Success!23234!";
+                let length = storedEmailAndPass.length;
+                let detailsFound = false;
+                let a = 0;
 
-                if (email == storedemail && password == storedPassword) {
-                    document.getElementById("finalError").innerHTML = "Success!!";
+                for (let i = 0; i < length; i++) {
+                    if (email == storedEmailAndPass[i].email && password == storedEmailAndPass[i].password) {
+                        detailsFound = true;
+                        break;
+                    }
+                    else if ( (email == storedEmailAndPass[i].email && password != storedEmailAndPass[i].password) || (email != storedEmailAndPass[i].email && password == storedEmailAndPass[i].password) ) {
+                        detailsFound = false;
+                        break;
+                    }
+                    else {
+                        a++;
+                    }
+
+                }
+                if (detailsFound == true) {
+                    document.getElementById("finalError").innerHTML = "Loged In Successfully!!";
                     document.getElementById("finalError").style.color = "green";
                     document.getElementById("finalError").style.textAlign = "center";
 
                     disappear();
                 }
-                else {
+                else if (detailsFound == false && a != length) {
                     document.getElementById("finalError").innerHTML = "Give the correct credentials!!";
+                    document.getElementById("finalError").style.color = "red";
+                    document.getElementById("finalError").style.textAlign = "center";
+
+                    disappear();
+                }
+                else {
+                    document.getElementById("finalError").innerHTML = "Your details is not found!! Try Signing Up!!";
                     document.getElementById("finalError").style.color = "red";
                     document.getElementById("finalError").style.textAlign = "center";
 
@@ -217,18 +313,74 @@
 
             emailField.addEventListener("input", function () {
                 document.getElementById("emailError").innerHTML = "";
-                document.getElementById("passwordError").innerHTML = "";
-                document.getElementById("finalError").innerHTML = "";
+
             })
 
             let passField = document.getElementById("passInput");
 
             passField.addEventListener("input", function () {
-                document.getElementById("emailError").innerHTML = "";
                 document.getElementById("passwordError").innerHTML = "";
-                document.getElementById("finalError").innerHTML = "";
             })
         }
+
+        function forgotPass() {
+            document.querySelector("form").style.display = "none";
+            document.getElementsByClassName("fpform")[0].style.display = "block";
+
+            let fpemailValue;
+
+            let fpemailField = document.getElementById("fpemailinput");
+
+            fpemailField.addEventListener("input", function (event) {
+                fpemailValue = document.getElementById("fpemailinput").value;
+                validatefp();
+            });
+
+            function validatefp() {
+                let length = storedEmailAndPass.length;
+                let detailsFound = false;
+
+                for (let i = 0; i < length; i++) {
+                    if (fpemailValue == storedEmailAndPass[i].email) {
+                        detailsFound = true;
+                        break;
+                    }
+
+                }
+
+                if (detailsFound) {
+                    document.getElementById("fpemailError").innerHTML = "";
+                    document.getElementById("fppasswordlabel").textContent = "Enter your new password";
+
+                    document.getElementById("fppassInput").disabled = false;
+                }
+                else {
+                    document.getElementById("fpemailError").innerHTML = "Your credentials does not exist in the database";
+                    document.getElementById("fpemailError").style.color = "red";
+                }
+            }
+        }
+
+        function changePass() {
+            fpemailValue = document.getElementById("fpemailinput").value;
+
+            fppassValue = document.getElementById("fppassInput").value;
+
+            let length = storedEmailAndPass.length;
+            for (let i = 0; i < length; i++) {
+                if (storedEmailAndPass[i].email == fpemailValue) {
+                    storedEmailAndPass[i].password = fppassValue;
+                    break;
+                }
+            }
+
+            document.getElementsByClassName("fpform")[0].style.display = "none";
+            document.getElementsByClassName("form")[0].style.display = "block";
+        }
+
+        document.querySelector('.fpform').addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
 
     </script>
 
