@@ -51,6 +51,7 @@ body {
 
 #signin {
     background-color: blueviolet;
+    color: white;
 }
 
 .label {
@@ -107,4 +108,42 @@ a {
 
 #fpsignin {
     background-color: blueviolet;
+    color: white;
+}
+
+.suform {
+    display:none;
+    margin-left: 190px;
+}
+
+.sulabel {
+    color: grey;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.suinp {
+    width: 350px;
+    height: 30px;
+    border-radius: 5px;
+    border-width: 1px;
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.suerror {
+    color: red;
+}
+
+.suinpbut {
+    width: 360px;
+    height: 30px;
+    border-radius: 5px;
+    border-width: 1px;
+    display: block;
+    margin: 10px 0 10px 0;
+    padding: 5px;
+    background-color: blueviolet;
+    color: white;
 }
