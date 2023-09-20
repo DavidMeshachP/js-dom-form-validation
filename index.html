@@ -46,6 +46,7 @@
         const emailInput = document.createElement("input");
         emailInput.setAttribute("placeholder", "Enter your email");
         emailInput.setAttribute("name", "email");
+        emailInput.setAttribute("onchange", "values(event)");
         emailInput.className = "inp";
         emailInput.id = "emailInput";
 
@@ -62,6 +63,7 @@
         passwordInput.setAttribute("type", "password");
         passwordInput.setAttribute("placeholder", "Enter your password");
         passwordInput.setAttribute("name", "password");
+        passwordInput.setAttribute("onchange", "values(event)");
         passwordInput.className = "inp";
         passwordInput.id = "passInput";
 
@@ -123,6 +125,7 @@
         const fpemailInput = document.createElement("input");
         fpemailInput.setAttribute("placeholder", "Enter your email");
         fpemailInput.setAttribute("name", "fpemail");
+        fpemailInput.setAttribute("onchange", "values(event)");
         fpemailInput.className = "fpinp";
         fpemailInput.id = "fpemailinput";
 
@@ -140,6 +143,7 @@
         fppasswordInput.setAttribute("type", "password");
         fppasswordInput.setAttribute("placeholder", "Enter your password");
         fppasswordInput.setAttribute("name", "fppassword");
+        fppasswordInput.setAttribute("onchange", "values(event)");
         fppasswordInput.disabled = true;
         fppasswordInput.className = "fpinp";
         fppasswordInput.id = "fppassInput";
@@ -181,6 +185,7 @@
         const suemailInput = document.createElement("input");
         suemailInput.setAttribute("placeholder", "Enter your email");
         suemailInput.setAttribute("name", "suemail");
+        suemailInput.setAttribute("onchange", "values(event)");
         suemailInput.className = "suinp";
         suemailInput.id = "suemailinput";
 
@@ -198,6 +203,7 @@
         supasswordInput.setAttribute("type", "password");
         supasswordInput.setAttribute("placeholder", "Enter your password");
         supasswordInput.setAttribute("name", "supassword");
+        supasswordInput.setAttribute("onchange", "values(event)");
         supasswordInput.className = "suinp";
         supasswordInput.id = "supassInput";
 
@@ -273,28 +279,53 @@
         ];
 
         const regEmail = /^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        // const regPass = /^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$ %^&*-]).{8,}$/;
-        // const regPass = /^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=.\-])([a-zA-Z0-9@#$%^&+=.\-]){8,}$/;
         const regPass = /^.{8,}$/;
+
+        let email="";
+        let password="";
+        let fpemailValue="";
+        let fppassValue="";
+        let suemailValue="";
+        let supassValue="";
+        function values(event) {
+            let a = event.target;
+            if (a.name == "email") {
+                email = a.value;
+            }
+            if (a.name == "password") {
+                password = a.value;
+            }
+            if (a.name == "fpemail") {
+                fpemailValue = a.value;
+                console.log(fpemailValue);  
+            }
+            if (a.name == "fppassword") {
+                fppassValue = a.value;
+            }
+            if (a.name == "suemail") {
+                suemailValue = a.value;
+            }
+            if (a.name == "supassword") {
+                supassValue = a.value;
+            }
+
+        }
 
 
         function validateForm() {
-            let email = document.getElementById("emailInput").value;
-            let password = document.getElementById("passInput").value;
 
-            if (email.trim() == "") {
+            if (email == "") {
                 document.getElementById("emailError").innerHTML = "email must be filled out";
                 document.getElementById("emailInput").style.border = "2px solid red";
             }
-
-            if (password.trim() == "") {
-                document.getElementById("passwordError").innerHTML = "Password cannot be empty";
-                document.getElementById("passInput").style.border = "2px solid red";
-            }
-
-            if (!regEmail.test(email)) {
+            else if (!regEmail.test(email)) {
                 document.getElementById("emailError").innerHTML = "email format wrong";
                 document.getElementById("emailInput").style.border = "2px solid red";
+            }
+
+            if (password == "") {
+                document.getElementById("passwordError").innerHTML = "Password cannot be empty";
+                document.getElementById("passInput").style.border = "2px solid red";
             }
 
             if (regEmail.test(email) && password != "") {
@@ -384,12 +415,11 @@
             document.querySelector("form").style.display = "none";
             document.getElementsByClassName("fpform")[0].style.display = "block";
 
-            let fpemailValue;
-
             let fpemailField = document.getElementById("fpemailinput");
 
             fpemailField.addEventListener("input", function (event) {
-                fpemailValue = document.getElementById("fpemailinput").value;
+                fpemailValue=event.target.value;
+                console.log(fpemailValue);
                 validatefpemail();
             });
 
@@ -422,9 +452,6 @@
         }
 
         function changePass() {
-            fpemailValue = document.getElementById("fpemailinput").value;
-
-            fppassValue = document.getElementById("fppassInput").value;
 
             if (fpemailValue == "") {
 
@@ -504,8 +531,6 @@
         }
 
         function createAccount() {
-            let suemailValue = document.getElementById("suemailinput").value;
-            let supassValue = document.getElementById("supassInput").value;
 
             if (suemailValue.trim() == "") {
                 document.getElementById("suemailError").innerHTML = "email must be filled out";
