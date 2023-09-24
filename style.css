@@ -148,13 +148,6 @@ a {
     color: white;
 }
 
-/* one method */
-/* input[type='password']:focus::-ms-clear,
-input[type='password']:focus::-ms-reveal {
-    display: block !important;
-} */
-
-/* second method */
 input[type='password']:focus::-ms-reveal {
     display: block !important;
 }

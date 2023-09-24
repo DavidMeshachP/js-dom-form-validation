@@ -171,7 +171,7 @@
         suformHeading.textContent = "Welcome";
 
         const suformHeadingTwo = document.createElement("h3");
-        suformHeadingTwo.textContent = " Please Provide your credentials";
+        suformHeadingTwo.textContent = " Please Provide your Credentials to Create an Account";
 
         const suemailLabel = document.createElement("label");
         suemailLabel.textContent = "Email";
@@ -315,16 +315,16 @@
         function validateForm() {
 
             if (email == "") {
-                document.getElementById("emailError").innerHTML = "email must be filled out";
+                document.getElementById("emailError").innerHTML = "EMAIL FIELD CANNOT BE EMPTY";
                 document.getElementById("emailInput").style.border = "2px solid red";
             }
             else if (!regEmail.test(email)) {
-                document.getElementById("emailError").innerHTML = "email format wrong";
+                document.getElementById("emailError").innerHTML = "EMAIL FORMAT WRONG";
                 document.getElementById("emailInput").style.border = "2px solid red";
             }
 
             if (password == "") {
-                document.getElementById("passwordError").innerHTML = "Password cannot be empty";
+                document.getElementById("passwordError").innerHTML = "PASSWORD CANNOT BE EMPTY";
                 document.getElementById("passInput").style.border = "2px solid red";
             }
 
@@ -360,13 +360,13 @@
 
                 }
                 else if (detailsFound == false && a != length) {
-                    document.getElementById("finalError").innerHTML = "Give the correct credentials!!";
+                    document.getElementById("finalError").innerHTML = "GIVE THE CORRECT CREDENTIALS!!";
                     document.getElementById("finalError").style.color = "red";
                     document.getElementById("finalError").style.textAlign = "center";
 
                 }
                 else {
-                    document.getElementById("finalError").innerHTML = "Your details is not found!! Try Signing Up!!";
+                    document.getElementById("finalError").innerHTML = "YOUR DETAILS IS NOT FOUND! TRY SIGNING UP!!";
                     document.getElementById("finalError").style.color = "red";
                     document.getElementById("finalError").style.textAlign = "center";
 
@@ -408,6 +408,7 @@
 
             document.getElementById("passwordError").innerHTML = "";
             document.getElementById("passInput").style.border = "1px solid black";
+            document.getElementsByClassName("form")[0].reset();
         }
 
         function forgotPass() {
@@ -443,7 +444,7 @@
                     document.getElementById("fppassInput").disabled = false;
                 }
                 else {
-                    document.getElementById("fpemailError").innerHTML = "Your credentials does not exist in the database";
+                    document.getElementById("fpemailError").innerHTML = "Your Credentials Does Not Exist In The Database";
                     document.getElementById("fpemailError").style.color = "red";
                     document.getElementById("fpemailinput").style.outline = "none";
                     document.getElementById("fpemailinput").style.border = "2px solid red";
@@ -463,7 +464,7 @@
                 disappearfp();
             }
 
-            if (fppassValue == "") {
+            if (fpemailError.innerHTML=="" && fppassValue == "") {
                 document.getElementById("fppasswordError").innerHTML = "PASSWORD CANNOT BE EMPTY";
                 document.getElementById("fppasswordError").style.color = "red";
                 document.getElementById("fppassInput").style.outline = "none";
@@ -491,7 +492,7 @@
                     document.getElementById("fpfinalError").innerHTML = "";
                 }, 1000);
             }
-            else {
+            else if (fpemailError.innerHTML=="" && fppassValue != "" && !regPass.test(fppassValue)){
                 document.getElementById("fppasswordError").innerHTML = "YOUR PASSWORD FORMAT IS WRONG !!!!";
                 document.getElementById("fppasswordError").style.color = "red";
                 document.getElementById("fppassInput").style.outline = "none";
@@ -533,25 +534,25 @@
         function createAccount() {
 
             if (suemailValue.trim() == "") {
-                document.getElementById("suemailError").innerHTML = "email must be filled out";
+                document.getElementById("suemailError").innerHTML = "EMAIL CANNOT BE EMPTY";
                 document.getElementById("suemailinput").style.border = "2px solid red";
                 document.getElementById("suemailinput").style.outline = "none";
             }
 
             else if (!regEmail.test(suemailValue)) {
-                document.getElementById("suemailError").innerHTML = "email format wrong";
+                document.getElementById("suemailError").innerHTML = "EMAIL FORMAT WRONG";
                 document.getElementById("suemailinput").style.border = "2px solid red";
                 document.getElementById("suemailinput").style.outline = "none";
             }
 
             if (supassValue.trim() == "") {
-                document.getElementById("supasswordError").innerHTML = "Password cannot be empty";
+                document.getElementById("supasswordError").innerHTML = "PASSWORD CANNOT BE EMPTY!";
                 document.getElementById("supassInput").style.border = "2px solid red";
                 document.getElementById("supassInput").style.outline = "none";
             }
 
             else if (!regPass.test(supassValue)) {
-                document.getElementById("supasswordError").innerHTML = "password format wrong( password must have atleast 8 characters)";
+                document.getElementById("supasswordError").innerHTML = "PASSWORD FORMAT WRONG ( password must have atleast 8 characters)";
                 document.getElementById("supassInput").style.border = "2px solid red";
                 document.getElementById("supassInput").style.outline = "none";
             }
